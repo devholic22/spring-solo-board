@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Profile;
+import org.springframework.web.filter.HiddenHttpMethodFilter;
 
 @Import(MemoryConfig.class)
 @SpringBootApplication(scanBasePackages = "devholic22.board.controller")
@@ -20,5 +21,10 @@ public class BoardApplication {
 	@Profile("local")
 	public TestInit testInit(BoardRepository boardRepository) {
 		return new TestInit(boardRepository);
+	}
+
+	@Bean
+	public HiddenHttpMethodFilter hiddenHttpMethodFilter() {
+		return new HiddenHttpMethodFilter();
 	}
 }
