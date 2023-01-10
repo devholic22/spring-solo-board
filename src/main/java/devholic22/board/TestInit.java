@@ -19,5 +19,6 @@ public class TestInit {
         boardRepository.save(new Board("anon", "test board 1", "this is test 1"));
         boardRepository.save(new Board("anon", "test board 2", "this is test 2"));
         boardRepository.save(new Board("anon", "test board 3", "this is test 3"));
+        boardRepository.save(new Board("anon", "test board 4", "this is test 4"));
     }
 }

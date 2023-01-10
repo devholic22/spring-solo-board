@@ -4,8 +4,7 @@ import devholic22.board.domain.Board;
 import devholic22.board.repository.dto.BoardDto;
 import devholic22.board.repository.dto.SearchDto;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class MemoryBoardRepository implements BoardRepository {
 
@@ -25,12 +24,36 @@ public class MemoryBoardRepository implements BoardRepository {
     }
 
     @Override
-    public Map<Long, Board> findAll() {
-        return store;
+    public Map<Long, Board> findAll(Integer page) {
+        int max = store.size();
+        int start = (page - 1) * 3;
+        if (start < 0) {
+            return null;
+        }
+        int end = start + 2;
+
+        Collection<Board> collection = store.values();
+        List<Board> mapToArray = new ArrayList<>(collection);
+
+        if (start >= max) {
+            return null;
+        } else {
+            Map<Long, Board> result = new HashMap<>();
+            if (end >= max) {
+                for (int i = start; i < max; i++) {
+                    result.put(mapToArray.get(i).getId(), mapToArray.get(i));
+                }
+            } else {
+                for (int i = start; i < end; i++) {
+                    result.put(mapToArray.get(i).getId(), mapToArray.get(i));
+                }
+            }
+            return result;
+        }
     }
 
     @Override
-    public Map<Long, Board> findByTitle(SearchDto searchDto) {
+    public Map<Long, Board> findByTitle(Integer page, SearchDto searchDto) {
         Map<Long, Board> temp = new HashMap<>();
 
         for (Board board : store.values()) {
@@ -39,7 +62,31 @@ public class MemoryBoardRepository implements BoardRepository {
             }
         }
 
-        return temp;
+        int max = temp.size();
+        int start = (page - 1) * 3;
+        if (start < 0) {
+            return null;
+        }
+        int end = start + 2;
+
+        Collection<Board> collection = store.values();
+        List<Board> mapToArray = new ArrayList<>(collection);
+
+        if (start >= max) {
+            return null;
+        } else {
+            Map<Long, Board> result = new HashMap<>();
+            if (end >= max) {
+                for (int i = start; i < max; i++) {
+                    result.put(mapToArray.get(i).getId(), mapToArray.get(i));
+                }
+            } else {
+                for (int i = start; i < end; i++) {
+                    result.put(mapToArray.get(i).getId(), mapToArray.get(i));
+                }
+            }
+            return result;
+        }
     }
 
     @Override

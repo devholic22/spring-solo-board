@@ -76,20 +76,23 @@
     </table>
     <nav aria-label="...">
         <ul class="pagination">
-            <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Prev</a>
+            <li th:if="${page - 1 <= 0}" class="page-item disabled">
+                <a th:if="${page - 1 <= 0}" class="page-link" href="#" tabindex="-1" aria-disabled="true">Prev</a>
             </li>
-            <li class="page-item">
-                <a class="page-link" href="#">1</a>
+            <li th:if="${page - 1 > 0}" class="page-item">
+                <a th:if="${page - 1 > 0}" class="page-link" th:href="@{/?page={prev}(prev=${page} - 1)}" tabindex="-1">Prev</a>
+            </li>
+            <li th:if="${page - 1 > 0}" class="page-item">
+                <a th:if="${page - 1 > 0}" class="page-link" th:href="@{/?page={prev}(prev=${page} - 1)}" th:text="${page - 1}"></a>
             </li>
             <li class="page-item active" aria-current="page">
-                <a class="page-link" href="#">2</a>
+                <a class="page-link active" href="#" th:text="${page}" aria-current="page"></a>
             </li>
             <li class="page-item">
-                <a class="page-link" href="#">3</a>
+                <a class="page-link" th:href="@{/?page={next}(next=${page} + 1)}" th:text="${page + 1}"></a>
             </li>
             <li class="page-item">
-                <a class="page-link" href="#">Next</a>
+                <a class="page-link" th:href="@{/?page={next}(next=${page} + 1)}">Next</a>
             </li>
         </ul>
     </nav>

@@ -11,9 +11,9 @@ public interface BoardRepository {
     void save(Board board);
     Board findById(Long id);
 
-    Map<Long, Board> findAll();
+    Map<Long, Board> findAll(Integer page);
 
-    Map<Long, Board> findByTitle(SearchDto searchDto);
+    Map<Long, Board> findByTitle(Integer page, SearchDto searchDto);
 
     void update(Long id, BoardDto boardDto);
     void delete(Long id);
