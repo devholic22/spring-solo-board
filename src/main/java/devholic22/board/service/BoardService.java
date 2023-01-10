@@ -23,12 +23,12 @@ public class BoardService {
         return boardRepository.findById(id);
     }
 
-    public Map<Long, Board> findAll() {
-        return boardRepository.findAll();
+    public Map<Long, Board> findAll(Integer page) {
+        return boardRepository.findAll(page);
     }
 
-    public Map<Long, Board> search(SearchDto searchDto) {
-        return boardRepository.findByTitle(searchDto);
+    public Map<Long, Board> search(Integer page, SearchDto searchDto) {
+        return boardRepository.findByTitle(page, searchDto);
     }
 
     public void fix(Long id, BoardDto boardDto) {

@@ -22,20 +22,21 @@ public class MainController {
 
     // 검색 조회 (필터링)
     @GetMapping()
-    public String Search(@RequestParam(required = false) String search, @ModelAttribute SearchDto searchDto, Model model) {
+    public String Search(@RequestParam(required = false) String search, @RequestParam(defaultValue = "1") Integer page, @ModelAttribute SearchDto searchDto, Model model) {
 
         Map<Long, Board> allBoard = null;
 
         if (search != null && searchDto != null) {
-            allBoard = boardService.search(searchDto);
+            allBoard = boardService.search(page, searchDto);
         } else {
-            allBoard = boardService.findAll();
+            allBoard = boardService.findAll(page);
         }
 
-        Collection<Board> boardValues = allBoard.values();
-        List<Board> boards = new ArrayList<>(boardValues);
+        Collection<Board> boardValues = allBoard == null ? null : allBoard.values();
+        List<Board> boards = allBoard == null ? null : new ArrayList<>(boardValues);
 
         model.addAttribute("boards", boards);
+        model.addAttribute("page", page);
 
         return "home";
     }
