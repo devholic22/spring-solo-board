@@ -8,8 +8,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Profile;
 
-@SpringBootApplication
 @Import(MemoryConfig.class)
+@SpringBootApplication(scanBasePackages = "devholic22.board.controller")
 public class BoardApplication {
 
 	public static void main(String[] args) {
