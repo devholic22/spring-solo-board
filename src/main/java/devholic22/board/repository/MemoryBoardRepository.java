@@ -69,7 +69,7 @@ public class MemoryBoardRepository implements BoardRepository {
         }
         int end = start + 2;
 
-        Collection<Board> collection = store.values();
+        Collection<Board> collection = temp.values();
         List<Board> mapToArray = new ArrayList<>(collection);
 
         if (start >= max) {
