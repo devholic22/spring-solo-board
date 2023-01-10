@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
+    <title>Document</title>
+    <style>
+        html {
+            padding: 20px;
+        }
+        h2 {
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        textarea {
+            resize: none;
+        }
+    </style>
+</head>
+<body>
+<h2>글 수정 페이지</h2>
+<form th:method="put" action th:action="@{|/board/${board.id}|}">
+
+    <div class="mb-3">
+        <label for="title" class="form-label">글 제목</label>
+        <input type="text" value="Hello" th:value="${board.title}" class="form-control" id="title" name="title">
+    </div>
+    <div class="form-group">
+        <label for="content" class="form-label">글 내용</label>
+        <textarea class="form-control" id="content" name="content" rows="10" th:text="${board.content}"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">등록</button>
+</form>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+</body>
+</html>
