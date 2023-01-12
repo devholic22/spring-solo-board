@@ -37,6 +37,9 @@ public class BoardController {
     @GetMapping("/{id}")
     public String OneBoard(@PathVariable String id, Model model) {
         Board board = boardService.findOne(Integer.parseInt(id));
+        if (board == null) {
+            return "redirect:/";
+        }
         model.addAttribute("board", board);
         return "board";
     }
@@ -45,6 +48,9 @@ public class BoardController {
     @GetMapping("/{id}/edit")
     public String EditBoard(@PathVariable String id, Model model) {
         Board board = boardService.findOne(Integer.parseInt(id));
+        if (board == null) {
+            return "redirect:/";
+        }
         model.addAttribute("board", board);
         return "editForm";
     }
@@ -53,13 +59,21 @@ public class BoardController {
     // PutMapping이 통하지 않는다.. 조치 완료!
     @PutMapping("/{id}")
     public String EditBoard(@PathVariable String id, @ModelAttribute BoardDto boardDto) {
-        boardService.fix(Integer.valueOf(id), boardDto);
+        Board board = boardService.findOne(Integer.parseInt(id));
+        if (board == null) {
+            return "redirect:/";
+        }
+        boardService.fix(board.getId(), boardDto);
         return "redirect:/";
     }
 
     // 특정 게시물 삭제 요청
     @DeleteMapping("/{id}")
     public String DeleteBoard(@PathVariable String id) {
+        Board board = boardService.findOne(Integer.parseInt(id));
+        if (board == null) {
+            return "redirect:/";
+        }
         boardService.remove(Integer.valueOf(id));
         return "redirect:/";
     }
