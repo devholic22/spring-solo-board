@@ -30,7 +30,7 @@ public class MemoryBoardRepository implements BoardRepository {
         if (start < 0) {
             return null;
         }
-        int end = start + 2;
+        int end = start + 3;
 
         Collection<Board> collection = store.values();
         List<Board> mapToArray = new ArrayList<>(collection);
