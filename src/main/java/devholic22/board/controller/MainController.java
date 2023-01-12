@@ -27,7 +27,7 @@ public class MainController {
 
         String search = searchCond.getSearch() != null ? searchCond.getSearch() : "";
         int page = searchCond.getPage() != null ? searchCond.getPage() : 1;
-        int EACH = 4; // 한 페이지에 표현될 수 있는 글의 갯수 (리포지토리에서와 값이 같아야 한다.)
+        int EACH = 3; // 한 페이지에 표현될 수 있는 글의 갯수 (리포지토리에서와 값이 같아야 한다.)
         int MAX_PAGE; // 최대 갈 수 있는 페이지
         int ALL_SIZE; // 필터링 된 전체 사이즈
         int PREV_BUTTONS = 1; // 현재 페이지 이전에 몇 개의 페이지네이션 버튼이 있을 수 있는지
