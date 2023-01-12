@@ -51,7 +51,7 @@ public class BoardController {
 
     // 특정 게시물 수정 요청
     // PutMapping이 통하지 않는다.. 조치 완료!
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public String EditBoard(@PathVariable String id, @ModelAttribute BoardDto boardDto) {
         boardService.fix(Long.valueOf(id), boardDto);
         return "redirect:/";
