@@ -5,14 +5,16 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class SearchDto {
+public class SearchCond {
 
     private String search;
+    private Integer page;
 
-    public SearchDto() {
+    public SearchCond() {
     }
 
-    public SearchDto(String search) {
+    public SearchCond(String search, int page) {
         this.search = search;
+        this.page = page;
     }
 }
