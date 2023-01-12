@@ -81,21 +81,24 @@
                 <a class="page-link" th:if="${param.search} != null" th:href="@{/?search={search}&page={prev}(search=${param.search}, prev=${page} - 1)}" tabindex="-1" aria-disabled="true">Prev</a>
             </li>
 
-            <li th:if="${page} - 1 > 0" class="page-item">
-                <a class="page-link" th:if="${param.search} == null" th:href="@{/?page={prev}(prev=${page} - 1)}" th:text="${page} - 1"></a>
-                <a class="page-link" th:if="${param.search} != null" th:href="@{/?search={search}&page={prev}(search=${param.search}, prev=${page} - 1)}" th:text="${page} - 1"></a>
+            <!-- prev pages -->
+            <li th:each="button : ${#numbers.sequence(1, prev_buttons)}" th:if="${page - button} > 0" class="page-item">
+                <a class="page-link" th:if="${param.search} == null" th:href="@{/?page={prev}(prev=${page - button})}" th:text="${page - button}"></a>
+                <a class="page-link" th:if="${param.search} != null" th:href="@{/?search={search}&page={prev}(search=${param.search}, prev=${page - button})}" th:text="${page - button}"></a>
             </li>
 
+            <!-- current -->
             <li class="page-item active" aria-current="page">
                 <a class="page-link active" href="#" th:text="${page}" aria-current="page"></a>
             </li>
 
-            <li class="page-item">
-                <a class="page-link" th:if="${param.search} == null" th:href="@{/?page={next}(next=${page} + 1)}" th:text="${page} + 1"></a>
-                <a class="page-link" th:if="${param.search} != null" th:href="@{/?search={search}&page={next}(search=${param.search}, next=${page} + 1)}" th:text="${page} + 1"></a>
+            <!-- next pages -->
+            <li th:each="button : ${#numbers.sequence(1, next_buttons)}" th:if="${page + button} <= ${max_page}" class="page-item">
+                <a class="page-link" th:if="${param.search} == null" th:href="@{/?page={next}(next=${page + button})}" th:text="${page + button}"></a>
+                <a class="page-link" th:if="${param.search} != null" th:href="@{/?search={search}&page={next}(search=${param.search}, next=${page + button})}" th:text="${page + button}"></a>
             </li>
 
-            <li class="page-item">
+            <li th:class="${page} + 1 > ${max_page} ? 'page-item disabled' : 'page-item'">
                 <a class="page-link" th:if="${param.search} == null" th:href="@{/?page={next}(next=${page} + 1)}">Next</a>
                 <a class="page-link" th:if="${param.search} != null" th:href="@{/?search={search}&page={next}(search=${param.search}, next=${page} + 1)}">Next</a>
             </li>
