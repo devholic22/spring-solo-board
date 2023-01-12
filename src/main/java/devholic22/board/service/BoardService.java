@@ -3,7 +3,7 @@ package devholic22.board.service;
 import devholic22.board.domain.Board;
 import devholic22.board.repository.BoardRepository;
 import devholic22.board.repository.dto.BoardDto;
-import devholic22.board.repository.dto.SearchDto;
+import devholic22.board.repository.dto.SearchCond;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,23 +19,27 @@ public class BoardService {
         boardRepository.save(board);
     }
 
-    public Board findOne(Long id) {
+    public Board findOne(Integer id) {
         return boardRepository.findById(id);
     }
 
-    public Map<Long, Board> findAll(Integer page) {
-        return boardRepository.findAll(page);
+    public Map<Integer, Board> findAll() {
+        return boardRepository.findAll();
     }
 
-    public Map<Long, Board> search(Integer page, SearchDto searchDto) {
-        return boardRepository.findByTitle(page, searchDto);
+    public int findByTitleCount(String title) {
+        return boardRepository.findByTitle(title).size();
     }
 
-    public void fix(Long id, BoardDto boardDto) {
+    public Map<Integer, Board> search(SearchCond searchCond) {
+        return boardRepository.findByCond(searchCond);
+    }
+
+    public void fix(Integer id, BoardDto boardDto) {
         boardRepository.update(id, boardDto);
     }
 
-    public void remove(Long id) {
+    public void remove(Integer id) {
         boardRepository.delete(id);
     }
 }
