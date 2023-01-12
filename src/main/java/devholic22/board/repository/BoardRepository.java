@@ -21,4 +21,6 @@ public interface BoardRepository {
     void update(Integer id, BoardDto boardDto);
 
     void delete(Integer id);
+
+    void clearStore();
 }

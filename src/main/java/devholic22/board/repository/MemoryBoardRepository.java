@@ -69,7 +69,15 @@ public class MemoryBoardRepository implements BoardRepository {
     }
 
     @Override
-    public void delete(Integer id) {
+    public void delete(Integer id) throws NoSuchElementException {
+        if (!store.containsKey(id)) {
+            throw new NoSuchElementException();
+        }
         store.remove(id);
+    }
+
+    @Override
+    public void clearStore() {
+        store.clear();
     }
 }
