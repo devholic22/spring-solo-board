@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="./css/bootstrap.min.css" th:href="'/css/bootstrap.min.css'">
+    <link rel="stylesheet" href="./css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
     <title>Document</title>
     <style>
         html {
@@ -53,7 +53,7 @@
         </form>
     </div>
     <button type="button" class="btn btn-outline-primary" onclick="location.href='addForm.html'"
-    th:onclick="|location.href='board'|">글 작성</button>
+    th:onclick="|location.href='@{board}'|">글 작성</button>
 </div>
 <div class="main-content">
     <table class="table">
@@ -76,23 +76,28 @@
     </table>
     <nav aria-label="...">
         <ul class="pagination">
-            <li th:if="${page - 1 <= 0}" class="page-item disabled">
-                <a th:if="${page - 1 <= 0}" class="page-link" href="#" tabindex="-1" aria-disabled="true">Prev</a>
+            <li th:class="${page} - 1 <= 0 ? 'page-item disabled' : 'page-item'">
+                <a class="page-link" th:if="${param.search} == null" th:href="@{/?page={prev}(prev=${page} - 1)}" tabindex="-1" aria-disabled="true">Prev</a>
+                <a class="page-link" th:if="${param.search} != null" th:href="@{/?search={search}&page={prev}(search=${param.search}, prev=${page} - 1)}" tabindex="-1" aria-disabled="true">Prev</a>
             </li>
-            <li th:if="${page - 1 > 0}" class="page-item">
-                <a th:if="${page - 1 > 0}" class="page-link" th:href="@{/?page={prev}(prev=${page} - 1)}" tabindex="-1">Prev</a>
+
+            <li th:if="${page} - 1 > 0" class="page-item">
+                <a class="page-link" th:if="${param.search} == null" th:href="@{/?page={prev}(prev=${page} + 1)}" th:text="${page} - 1"></a>
+                <a class="page-link" th:if="${param.search} != null" th:href="@{/?search={search}&page={prev}(search=${param.search}, prev=${page} - 1)}" th:text="${page} - 1"></a>
             </li>
-            <li th:if="${page - 1 > 0}" class="page-item">
-                <a th:if="${page - 1 > 0}" class="page-link" th:href="@{/?page={prev}(prev=${page} - 1)}" th:text="${page - 1}"></a>
-            </li>
+
             <li class="page-item active" aria-current="page">
                 <a class="page-link active" href="#" th:text="${page}" aria-current="page"></a>
             </li>
+
             <li class="page-item">
-                <a class="page-link" th:href="@{/?page={next}(next=${page} + 1)}" th:text="${page + 1}"></a>
+                <a class="page-link" th:if="${param.search} == null" th:href="@{/?page={next}(next=${page} + 1)}" th:text="${page} + 1"></a>
+                <a class="page-link" th:if="${param.search} != null" th:href="@{/?search={search}&page={next}(search=${param.search}, next=${page} + 1)}" th:text="${page} + 1"></a>
             </li>
+
             <li class="page-item">
-                <a class="page-link" th:href="@{/?page={next}(next=${page} + 1)}">Next</a>
+                <a class="page-link" th:if="${param.search} == null" th:href="@{/?page={next}(next=${page} + 1)}">Next</a>
+                <a class="page-link" th:if="${param.search} != null" th:href="@{/?search={search}&page={next}(search=${param.search}, next=${page} + 1)}">Next</a>
             </li>
         </ul>
     </nav>
