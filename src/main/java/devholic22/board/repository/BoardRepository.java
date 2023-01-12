@@ -2,19 +2,23 @@ package devholic22.board.repository;
 
 import devholic22.board.domain.Board;
 import devholic22.board.repository.dto.BoardDto;
-import devholic22.board.repository.dto.SearchDto;
+import devholic22.board.repository.dto.SearchCond;
 
 import java.util.Map;
 
 public interface BoardRepository {
 
     void save(Board board);
-    Board findById(Long id);
 
-    Map<Long, Board> findAll(Integer page);
+    Board findById(Integer id);
 
-    Map<Long, Board> findByTitle(Integer page, SearchDto searchDto);
+    Map<Integer, Board> findAll();
 
-    void update(Long id, BoardDto boardDto);
-    void delete(Long id);
+    Map<Integer, Board> findByTitle(String title);
+
+    Map<Integer, Board> findByCond(SearchCond searchCond);
+
+    void update(Integer id, BoardDto boardDto);
+
+    void delete(Integer id);
 }

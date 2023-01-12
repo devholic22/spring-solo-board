@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter;
 @Setter
 public class Board {
 
-    private Long id;
+    private Integer id;
 
     private String writer;
     private String title;
