@@ -2,14 +2,14 @@ package devholic22.board.repository;
 
 import devholic22.board.domain.Board;
 import devholic22.board.repository.dto.BoardDto;
-import devholic22.board.repository.dto.SearchDto;
+import devholic22.board.repository.dto.SearchCond;
 
 import java.util.*;
 
 public class MemoryBoardRepository implements BoardRepository {
 
-    private static final Map<Long, Board> store = new HashMap<>();
-    private Long sequence = 0L;
+    private static final Map<Integer, Board> store = new HashMap<>();
+    private Integer sequence = 0;
 
     @Override
     public void save(Board board) {
@@ -19,85 +19,57 @@ public class MemoryBoardRepository implements BoardRepository {
     }
 
     @Override
-    public Board findById(Long id) {
+    public Board findById(Integer id) {
         return store.get(id);
     }
 
     @Override
-    public Map<Long, Board> findAll(Integer page) {
-        int max = store.size();
-        int start = (page - 1) * 3;
-        if (start < 0) {
-            return null;
-        }
-        int end = start + 3;
-
-        Collection<Board> collection = store.values();
-        List<Board> mapToArray = new ArrayList<>(collection);
-
-        if (start >= max) {
-            return null;
-        } else {
-            Map<Long, Board> result = new HashMap<>();
-            if (end >= max) {
-                for (int i = start; i < max; i++) {
-                    result.put(mapToArray.get(i).getId(), mapToArray.get(i));
-                }
-            } else {
-                for (int i = start; i < end; i++) {
-                    result.put(mapToArray.get(i).getId(), mapToArray.get(i));
-                }
-            }
-            return result;
-        }
+    public Map<Integer, Board> findAll() {
+        return store;
     }
 
     @Override
-    public Map<Long, Board> findByTitle(Integer page, SearchDto searchDto) {
-        Map<Long, Board> temp = new HashMap<>();
-
+    public Map<Integer, Board> findByTitle(String title) {
+        Map<Integer, Board> temp = new HashMap<>();
+        int pos = 0;
         for (Board board : store.values()) {
-            if (board.getTitle().contains(searchDto.getSearch())) {
-                temp.put(board.getId(), board);
+            if (board.getTitle().contains(title)) {
+                temp.put(pos++, board);
             }
         }
-
-        int max = temp.size();
-        int start = (page - 1) * 3;
-        if (start < 0) {
-            return null;
-        }
-        int end = start + 2;
-
-        Collection<Board> collection = temp.values();
-        List<Board> mapToArray = new ArrayList<>(collection);
-
-        if (start >= max) {
-            return null;
-        } else {
-            Map<Long, Board> result = new HashMap<>();
-            if (end >= max) {
-                for (int i = start; i < max; i++) {
-                    result.put(mapToArray.get(i).getId(), mapToArray.get(i));
-                }
-            } else {
-                for (int i = start; i < end; i++) {
-                    result.put(mapToArray.get(i).getId(), mapToArray.get(i));
-                }
-            }
-            return result;
-        }
+        return temp;
     }
 
     @Override
-    public void update(Long id, BoardDto boardDto) {
+    public Map<Integer, Board> findByCond(SearchCond searchCond) {
+        Map<Integer, Board> temp;
+        Map<Integer, Board> result = new HashMap<>();
+
+        String title = searchCond.getSearch() != null ? searchCond.getSearch() : "";
+
+        temp = findByTitle(title);
+
+        int page = searchCond.getPage() != null ? searchCond.getPage() : 1;
+        int EACH_PAGE = 3;
+        int start = page > 0 ? (page - 1) * EACH_PAGE : 0;
+        int end = Math.min(start + EACH_PAGE, temp.size());
+
+        for (int j = start; j < end; j++) {
+            result.put(j, temp.get(j));
+        }
+
+        return result;
+    }
+
+    @Override
+    public void update(Integer id, BoardDto boardDto) {
         Board findBoard = store.get(id);
         findBoard.setTitle(boardDto.getTitle());
         findBoard.setContent(boardDto.getContent());
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(Integer id) {
         store.remove(id);
     }
 }
