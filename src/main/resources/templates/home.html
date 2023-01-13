@@ -66,11 +66,15 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="board : ${boards}">
-            <th scope="row" th:text="${board.id}"></th>
-            <td><a href="" th:text="${board.writer}"></a></td>
-            <td><a th:href="|board/${board.id}|" th:text="${board.title}"></a></td>
-            <td th:text="${board.createdAt}"></td>
+        <tr th:each="number : ${#numbers.sequence(start_idx, last_idx)}">
+            <th th:if="${boards.size()} > (${number} - ((${page} - 1) * ${each}) - 1)" scope="row" th:text="${number}"></th>
+            <td th:if="${boards.size()} > (${number} - ((${page} - 1) * ${each}) - 1)">
+                <a th:if="${boards.size()} > (${number} - ((${page} - 1) * ${each}) - 1)" href="" th:text="${boards.get(number - ((page - 1) * each) - 1).writer}"></a>
+            </td>
+            <td th:if="${boards.size()} > (${number} - ((${page} - 1) * ${each}) - 1)">
+                <a th:if="${boards.size()} > (${number} - ((${page} - 1) * ${each}) - 1)" th:href="|board/${boards.get(number - ((page - 1) * each) - 1).id}|" th:text="${boards.get(number - ((page - 1) * each) - 1).title}"></a>
+            </td>
+            <td th:if="${boards.size()} > (${number} - ((${page} - 1) * ${each}) - 1)" th:text="${boards.get(number - ((page - 1) * each) - 1).createdAt}"></td>
         </tr>
         </tbody>
     </table>
