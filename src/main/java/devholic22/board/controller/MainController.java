@@ -32,6 +32,8 @@ public class MainController {
         int ALL_SIZE; // 필터링 된 전체 사이즈
         int PREV_BUTTONS = 1; // 현재 페이지 이전에 몇 개의 페이지네이션 버튼이 있을 수 있는지
         int NEXT_BUTTONS = 1; // 현재 페이지 다음에 몇 개의 페이지네이션 버튼이 있을 수 있는지
+        int START_IDX = EACH * (page - 1) + 1; // 뷰에 보여지는 시작 인덱스
+        int LAST_IDX = EACH * (page - 1) + EACH; // 뷰에 보여지는 마지막 인덱스
 
         allBoard = boardService.search(searchCond);
         ALL_SIZE = boardService.findByTitleCount(search);
@@ -50,9 +52,12 @@ public class MainController {
 
         model.addAttribute("boards", boards);
         model.addAttribute("page", page);
+        model.addAttribute("each", EACH);
         model.addAttribute("max_page", MAX_PAGE);
         model.addAttribute("prev_buttons", PREV_BUTTONS);
         model.addAttribute("next_buttons", NEXT_BUTTONS);
+        model.addAttribute("start_idx", START_IDX);
+        model.addAttribute("last_idx", LAST_IDX);
 
         return "home";
     }
