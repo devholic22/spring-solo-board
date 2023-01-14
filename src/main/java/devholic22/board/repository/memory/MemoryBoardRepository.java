@@ -20,31 +20,30 @@ public class MemoryBoardRepository implements BoardRepository {
     }
 
     @Override
-    public Board findById(Integer id) {
-        return store.get(id);
+    public Optional<Board> findById(Integer id) {
+        return Optional.ofNullable(store.get(id));
     }
 
     @Override
-    public Map<Integer, Board> findAll() {
-        return store;
+    public List<Board> findAll() {
+        return store.values().stream().toList();
     }
 
     @Override
-    public Map<Integer, Board> findByTitle(String title) {
-        Map<Integer, Board> temp = new HashMap<>();
-        int pos = 0;
+    public List<Board> findByTitle(String title) {
+        List<Board> temp = new ArrayList<>();
         for (Board board : store.values()) {
             if (board.getTitle().contains(title)) {
-                temp.put(pos++, board);
+                temp.add(board);
             }
         }
         return temp;
     }
 
     @Override
-    public Map<Integer, Board> findByCond(SearchCond searchCond) {
-        Map<Integer, Board> temp;
-        Map<Integer, Board> result = new HashMap<>();
+    public List<Board> findByCond(SearchCond searchCond) {
+        List<Board> temp;
+        List<Board> result = new ArrayList<>();
 
         String title = searchCond.getSearch() != null ? searchCond.getSearch() : "";
 
@@ -56,7 +55,7 @@ public class MemoryBoardRepository implements BoardRepository {
         int end = Math.min(start + EACH_PAGE, temp.size());
 
         for (int j = start; j < end; j++) {
-            result.put(j, temp.get(j));
+            result.add(temp.get(j));
         }
 
         return result;
