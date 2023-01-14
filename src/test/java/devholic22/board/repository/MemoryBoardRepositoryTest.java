@@ -8,7 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Map;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import static org.assertj.core.api.Assertions.*;
@@ -35,11 +35,12 @@ public class MemoryBoardRepositoryTest {
         boardRepository.save(board2);
         boardRepository.save(board3);
 
+        List<Board> result = boardRepository.findAll();
         // then
-        assertThat(boardRepository.findAll().size()).isEqualTo(3);
-        assertThat(boardRepository.findAll().containsValue(board1)).isTrue();
-        assertThat(boardRepository.findAll().containsValue(board2)).isTrue();
-        assertThat(boardRepository.findAll().containsValue(board3)).isTrue();
+        assertThat(result.size()).isEqualTo(3);
+        assertThat(result.contains(board1)).isTrue();
+        assertThat(result.contains(board2)).isTrue();
+        assertThat(result.contains(board3)).isTrue();
     }
 
     @Test
@@ -51,7 +52,7 @@ public class MemoryBoardRepositoryTest {
         // when
         boardRepository.save(board1);
 
-        Board findBoard = boardRepository.findById(board1.getId());
+        Board findBoard = boardRepository.findById(board1.getId()).get();
 
         // then
         assertThat(findBoard).isEqualTo(board1);
@@ -67,7 +68,7 @@ public class MemoryBoardRepositoryTest {
         boardRepository.save(board1);
 
         // then
-        assertThat(boardRepository.findById(2)).isNull();
+        assertThat(boardRepository.findById(2)).isEmpty();
     }
 
     @Test
@@ -85,7 +86,7 @@ public class MemoryBoardRepositoryTest {
 
         boardRepository.update(board1.getId(), boardDto);
 
-        Board updateBoard = boardRepository.findById(board1.getId());
+        Board updateBoard = boardRepository.findById(board1.getId()).get();
 
         // then
         assertThat(board1.getTitle()).isEqualTo(newTitle);
@@ -124,9 +125,11 @@ public class MemoryBoardRepositoryTest {
         boardRepository.save(board2);
         boardRepository.delete(board1.getId());
 
+        List<Board> result = boardRepository.findAll();
+
         // then
-        assertThat(boardRepository.findAll()).doesNotContainValue(board1);
-        assertThat(boardRepository.findAll().size()).isEqualTo(1);
+        assertThat(result).doesNotContain(board1);
+        assertThat(result).size().isEqualTo(1);
     }
 
     @Test
@@ -155,12 +158,12 @@ public class MemoryBoardRepositoryTest {
         boardRepository.save(board2);
         boardRepository.save(board3);
 
-        Map<Integer, Board> boards = boardRepository.findByTitle("글");
+        List<Board> boards = boardRepository.findByTitle("글");
 
         // then
         assertThat(boards.size()).isEqualTo(2);
-        assertThat(boards.containsValue(board1)).isTrue();
-        assertThat(boards.containsValue(board2)).isTrue();
+        assertThat(boards.contains(board1)).isTrue();
+        assertThat(boards.contains(board2)).isTrue();
     }
 
     @Test
@@ -179,11 +182,11 @@ public class MemoryBoardRepositoryTest {
         boardRepository.save(board4);
 
         SearchCond searchCond = new SearchCond("", 2);
-        Map<Integer, Board> boards = boardRepository.findByCond(searchCond);
+        List<Board> boards = boardRepository.findByCond(searchCond);
 
         // then
         assertThat(boards.size()).isEqualTo(1);
-        assertThat(boards.containsValue(board4)).isTrue();
+        assertThat(boards.contains(board4)).isTrue();
     }
 
     @Test
@@ -213,11 +216,11 @@ public class MemoryBoardRepositoryTest {
 
         SearchCond searchCond = new SearchCond("eng", 2);
 
-        Map<Integer, Board> boards = boardRepository.findByCond(searchCond);
+        List<Board> boards = boardRepository.findByCond(searchCond);
 
         // then
         assertThat(boards.size()).isEqualTo(2);
-        assertThat(boards.containsValue(board8)).isTrue();
-        assertThat(boards.containsValue(board9)).isTrue();
+        assertThat(boards.contains(board8)).isTrue();
+        assertThat(boards.contains(board9)).isTrue();
     }
 }

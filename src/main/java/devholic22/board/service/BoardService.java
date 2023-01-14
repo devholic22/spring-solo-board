@@ -7,7 +7,7 @@ import devholic22.board.repository.dto.SearchCond;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -20,10 +20,10 @@ public class BoardService {
     }
 
     public Board findOne(Integer id) {
-        return boardRepository.findById(id);
+        return boardRepository.findById(id).get();
     }
 
-    public Map<Integer, Board> findAll() {
+    public List<Board> findAll() {
         return boardRepository.findAll();
     }
 
@@ -31,7 +31,7 @@ public class BoardService {
         return boardRepository.findByTitle(title).size();
     }
 
-    public Map<Integer, Board> search(SearchCond searchCond) {
+    public List<Board> search(SearchCond searchCond) {
         return boardRepository.findByCond(searchCond);
     }
 

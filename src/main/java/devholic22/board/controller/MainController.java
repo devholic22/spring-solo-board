@@ -23,7 +23,7 @@ public class MainController {
     @GetMapping()
     public String search (@ModelAttribute SearchCond searchCond, Model model) {
 
-        Map<Integer, Board> allBoard;
+        List<Board> boards;
 
         String search = searchCond.getSearch() != null ? searchCond.getSearch() : "";
         int page = searchCond.getPage() != null ? searchCond.getPage() : 1;
@@ -35,16 +35,13 @@ public class MainController {
         int START_IDX = EACH * (page - 1) + 1; // 뷰에 보여지는 시작 인덱스
         int LAST_IDX = EACH * (page - 1) + EACH; // 뷰에 보여지는 마지막 인덱스
 
-        allBoard = boardService.search(searchCond);
+        boards = boardService.search(searchCond);
         ALL_SIZE = boardService.findByTitleCount(search);
         MAX_PAGE = ALL_SIZE % EACH == 0 ? ALL_SIZE / EACH : ALL_SIZE / EACH + 1;
 
         if (page <= 0 || page > MAX_PAGE) {
             return "redirect:/";
         }
-
-        Collection<Board> boardValues = allBoard.values();
-        List<Board> boards = new ArrayList<>(boardValues);
 
         if (boards.size() == 0) {
             return "redirect:/";

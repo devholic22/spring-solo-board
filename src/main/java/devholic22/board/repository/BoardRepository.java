@@ -4,19 +4,20 @@ import devholic22.board.domain.Board;
 import devholic22.board.repository.dto.BoardDto;
 import devholic22.board.repository.dto.SearchCond;
 
-import java.util.Map;
+import java.util.List;
+import java.util.Optional;
 
 public interface BoardRepository {
 
     void save(Board board);
 
-    Board findById(Integer id);
+    Optional<Board> findById(Integer id);
 
-    Map<Integer, Board> findAll();
+    List<Board> findAll();
 
-    Map<Integer, Board> findByTitle(String title);
+    List<Board> findByTitle(String title);
 
-    Map<Integer, Board> findByCond(SearchCond searchCond);
+    List<Board> findByCond(SearchCond searchCond);
 
     void update(Integer id, BoardDto boardDto);
 
