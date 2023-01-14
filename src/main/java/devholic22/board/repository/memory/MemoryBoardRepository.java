@@ -1,6 +1,7 @@
-package devholic22.board.repository;
+package devholic22.board.repository.memory;
 
 import devholic22.board.domain.Board;
+import devholic22.board.repository.BoardRepository;
 import devholic22.board.repository.dto.BoardDto;
 import devholic22.board.repository.dto.SearchCond;
 

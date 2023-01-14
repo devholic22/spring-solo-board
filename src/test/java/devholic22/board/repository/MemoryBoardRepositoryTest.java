@@ -3,6 +3,7 @@ package devholic22.board.repository;
 import devholic22.board.domain.Board;
 import devholic22.board.repository.dto.BoardDto;
 import devholic22.board.repository.dto.SearchCond;
+import devholic22.board.repository.memory.MemoryBoardRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
