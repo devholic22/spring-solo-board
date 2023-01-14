@@ -52,7 +52,7 @@ public class MemoryBoardRepositoryTest {
         // when
         boardRepository.save(board1);
 
-        Board findBoard = boardRepository.findById(board1.getId()).get();
+        Board findBoard = boardRepository.findById(board1.getId());
 
         // then
         assertThat(findBoard).isEqualTo(board1);
@@ -68,7 +68,7 @@ public class MemoryBoardRepositoryTest {
         boardRepository.save(board1);
 
         // then
-        assertThat(boardRepository.findById(2)).isEmpty();
+        assertThat(boardRepository.findById(2)).isNull();
     }
 
     @Test
@@ -86,7 +86,7 @@ public class MemoryBoardRepositoryTest {
 
         boardRepository.update(board1.getId(), boardDto);
 
-        Board updateBoard = boardRepository.findById(board1.getId()).get();
+        Board updateBoard = boardRepository.findById(board1.getId());
 
         // then
         assertThat(board1.getTitle()).isEqualTo(newTitle);

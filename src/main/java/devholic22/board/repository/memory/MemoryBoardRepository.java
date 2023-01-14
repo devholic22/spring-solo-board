@@ -20,8 +20,8 @@ public class MemoryBoardRepository implements BoardRepository {
     }
 
     @Override
-    public Optional<Board> findById(Integer id) {
-        return Optional.ofNullable(store.get(id));
+    public Board findById(Integer id) {
+        return store.get(id);
     }
 
     @Override
