@@ -1,5 +1,6 @@
 package devholic22.board;
 
+import devholic22.board.config.JdbcTemplateConfig;
 import devholic22.board.config.MemoryConfig;
 import devholic22.board.repository.BoardRepository;
 import org.springframework.boot.SpringApplication;
@@ -9,7 +10,8 @@ import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Profile;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 
-@Import(MemoryConfig.class)
+// @Import(MemoryConfig.class)
+@Import(JdbcTemplateConfig.class)
 @SpringBootApplication(scanBasePackages = "devholic22.board.controller")
 public class BoardApplication {
 
