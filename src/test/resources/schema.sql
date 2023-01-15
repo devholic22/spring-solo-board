@@ -4,5 +4,6 @@ create table board (
     writer varchar(10),
     title varchar(20),
     content text,
+    createdAt varchar(20),
     primary key (id)
 );
