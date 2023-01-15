@@ -8,7 +8,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Profile;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
+
+import javax.sql.DataSource;
 
 // @Import(MemoryConfig.class)
 @Import(JdbcTemplateConfig.class)
@@ -23,6 +26,15 @@ public class BoardApplication {
 	@Profile("local")
 	public TestInit testInit(BoardRepository boardRepository) {
 		return new TestInit(boardRepository);
+	}
+
+	@Bean
+	@Profile("test")
+	public DataSource dataSource() {
+		DriverManagerDataSource dataSource = new DriverManagerDataSource();
+		dataSource.setUrl("jdbc:h2:tcp://localhost/~/board");
+		dataSource.setUsername("sa");
+		return dataSource;
 	}
 
 	@Bean

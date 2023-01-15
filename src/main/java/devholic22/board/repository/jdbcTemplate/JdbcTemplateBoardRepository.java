@@ -7,7 +7,6 @@ import devholic22.board.repository.dto.SearchCond;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -17,6 +16,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import javax.sql.DataSource;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 public class JdbcTemplateBoardRepository implements BoardRepository {
 
@@ -29,8 +29,9 @@ public class JdbcTemplateBoardRepository implements BoardRepository {
     @Override
     public void save(Board board) {
         String sql = "insert into board (writer, title, content, createdAt) values (:writer, :title, :content, :createdAt)";
+
         SqlParameterSource param = new MapSqlParameterSource()
-                .addValue("writer", "anon")
+                .addValue("writer", board.getWriter() != "anon" ? board.getWriter() : "anon")
                 .addValue("title", board.getTitle())
                 .addValue("content", board.getContent())
                 .addValue("createdAt", board.getCreatedAt());
@@ -95,21 +96,27 @@ public class JdbcTemplateBoardRepository implements BoardRepository {
                 .addValue("title", boardDto.getTitle())
                 .addValue("content", boardDto.getContent())
                 .addValue("id", id);
-        template.update(sql, param);
+        int count = template.update(sql, param);
+        if (count != 1) {
+            throw new NullPointerException();
+        }
     }
 
     @Override
     public void delete(Integer id) {
         String sql = "delete from board where id=:id";
         SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
-        template.update(sql, param);
+        int count = template.update(sql, param);
+        if (count != 1) {
+            throw new NoSuchElementException();
+        }
     }
 
     @Override
     public void clearStore() {
-        String sql = "truncate table board + '\n' + alter table board auto_increment=1";
-        SqlParameterSource param = new MapSqlParameterSource();
-        template.update(sql, param);
+        // String sql = "truncate table boar";alter table board auto_increment=1";
+        // SqlParameterSource param = new MapSqlParameterSource();
+        // template.update(sql, param);
     }
 
     private RowMapper<Board> boardRowMapper() {
