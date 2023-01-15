@@ -28,6 +28,7 @@ public class BoardApplication {
 		return new TestInit(boardRepository);
 	}
 
+	/*
 	@Bean
 	@Profile("test")
 	public DataSource dataSource() {
@@ -36,6 +37,7 @@ public class BoardApplication {
 		dataSource.setUsername("sa");
 		return dataSource;
 	}
+	*/
 
 	@Bean
 	public HiddenHttpMethodFilter hiddenHttpMethodFilter() {
