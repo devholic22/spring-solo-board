@@ -1,5 +1,6 @@
 package devholic22.board.domain;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,6 +9,7 @@ import java.time.format.DateTimeFormatter;
 
 @Getter
 @Setter
+@EqualsAndHashCode
 public class Board {
 
     private Integer id;
