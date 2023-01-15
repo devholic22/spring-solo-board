@@ -5,13 +5,12 @@ import devholic22.board.repository.dto.BoardDto;
 import devholic22.board.repository.dto.SearchCond;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface BoardRepository {
 
     void save(Board board);
 
-    Optional<Board> findById(Integer id);
+    Board findById(Integer id);
 
     List<Board> findAll();
 

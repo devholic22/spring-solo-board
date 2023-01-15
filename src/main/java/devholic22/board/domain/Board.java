@@ -17,6 +17,10 @@ public class Board {
     private String content;
     private String createdAt;
 
+    public Board() {
+        this.createdAt = timeFormat();
+    }
+
     public Board(String writer, String title, String content) {
         this.writer = writer;
         this.title = title;
