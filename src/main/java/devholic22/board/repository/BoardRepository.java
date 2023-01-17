@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface BoardRepository {
 
-    void save(Board board);
+    Board save(Board board);
 
     Board findById(Integer id);
 
