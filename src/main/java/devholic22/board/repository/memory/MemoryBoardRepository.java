@@ -13,10 +13,11 @@ public class MemoryBoardRepository implements BoardRepository {
     private Integer sequence = 0;
 
     @Override
-    public void save(Board board) {
+    public Board save(Board board) {
         board.setId(++sequence);
         board.setWriter("anon");
         store.put(board.getId(), board);
+        return board;
     }
 
     @Override

@@ -27,7 +27,7 @@ public class JdbcTemplateBoardRepository implements BoardRepository {
     }
 
     @Override
-    public void save(Board board) {
+    public Board save(Board board) {
         String sql = "insert into board (writer, title, content, createdAt) values (:writer, :title, :content, :createdAt)";
 
         SqlParameterSource param = new MapSqlParameterSource()
@@ -39,6 +39,7 @@ public class JdbcTemplateBoardRepository implements BoardRepository {
         template.update(sql, param, keyHolder);
         int key = keyHolder.getKey().intValue();
         board.setId(key);
+        return board;
     }
 
     @Override
