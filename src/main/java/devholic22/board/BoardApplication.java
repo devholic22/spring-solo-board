@@ -2,6 +2,7 @@ package devholic22.board;
 
 import devholic22.board.config.JdbcTemplateConfig;
 import devholic22.board.config.MemoryConfig;
+import devholic22.board.config.MyBatisConfig;
 import devholic22.board.repository.BoardRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,7 +15,8 @@ import org.springframework.web.filter.HiddenHttpMethodFilter;
 import javax.sql.DataSource;
 
 // @Import(MemoryConfig.class)
-@Import(JdbcTemplateConfig.class)
+// @Import(JdbcTemplateConfig.class)
+@Import(MyBatisConfig.class)
 @SpringBootApplication(scanBasePackages = "devholic22.board.controller")
 public class BoardApplication {
 
