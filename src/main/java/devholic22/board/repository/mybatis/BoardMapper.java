@@ -10,7 +10,6 @@ import java.util.List;
 @Mapper
 public interface BoardMapper {
 
-    @Insert("insert into board (writer, title, content, createdAt) values (#{writer}, #{title}, #{content}, #{createdAt})")
     void save(Board board);
 
     @Update("update board set title=#{boardDto.title}, content=#{boardDto.content} where id=#{id}")

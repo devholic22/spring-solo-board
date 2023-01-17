@@ -2,6 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="devholic22.board.repository.mybatis.BoardMapper">
+    <insert id="save" useGeneratedKeys="true" keyProperty="id">
+        insert into board (writer, title, content, createdAt)
+        values (#{writer}, #{title}, #{content}, #{createdAt})
+    </insert>
     <select id="findByTitle" resultType="Board">
         select *
         from board

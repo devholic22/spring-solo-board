@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Repository
 @RequiredArgsConstructor
@@ -16,8 +17,9 @@ public class MyBatisBoardRepository implements BoardRepository {
     private final BoardMapper boardMapper;
 
     @Override
-    public void save(Board board) {
+    public Board save(Board board) {
         boardMapper.save(board);
+        return board;
     }
 
     @Override
@@ -41,12 +43,18 @@ public class MyBatisBoardRepository implements BoardRepository {
     }
 
     @Override
-    public void update(Integer id, BoardDto boardDto) {
+    public void update(Integer id, BoardDto boardDto) throws NullPointerException {
+        if (boardMapper.findById(id) == null) {
+            throw new NullPointerException();
+        }
         boardMapper.update(id, boardDto);
     }
 
     @Override
-    public void delete(Integer id) {
+    public void delete(Integer id) throws NoSuchElementException {
+        if (boardMapper.findById(id) == null) {
+            throw new NoSuchElementException();
+        }
         boardMapper.delete(id);
     }
 
