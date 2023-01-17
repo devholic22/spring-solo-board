@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="devholic22.board.repository.mybatis.BoardMapper">
+    <select id="findByTitle" resultType="Board">
+        select *
+        from board
+        <where>
+            title like concat('%', #{search}, '%');
+        </where>
+    </select>
+    <select id="findByCond" resultType="Board">
+        select *
+        from board
+        <where>
+            <if test='search != "" and search != null'>
+                title like concat('%', #{search}, '%')
+            </if>
+        </where>
+        <if test="page gt 0">
+            limit 3 offset (#{page} - 1) * 3;
+        </if>
+        <if test="page lt 0">
+            limit 3 offset 0;
+        </if>
+    </select>
+</mapper>
