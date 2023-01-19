@@ -1,6 +1,7 @@
 package devholic22.board;
 
 import devholic22.board.config.JdbcTemplateConfig;
+import devholic22.board.config.JpaConfig;
 import devholic22.board.config.MemoryConfig;
 import devholic22.board.config.MyBatisConfig;
 import devholic22.board.repository.BoardRepository;
@@ -16,7 +17,8 @@ import javax.sql.DataSource;
 
 // @Import(MemoryConfig.class)
 // @Import(JdbcTemplateConfig.class)
-@Import(MyBatisConfig.class)
+// @Import(MyBatisConfig.class)
+@Import(JpaConfig.class)
 @SpringBootApplication(scanBasePackages = "devholic22.board.controller")
 public class BoardApplication {
 
